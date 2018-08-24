@@ -1,0 +1,36 @@
+{
+  "name": "react-playground",
+  "version": "1.0.0",
+  "description": "Playing around with react",
+  "main": "index.js",
+  "scripts": {
+    "webpack": "webpack",
+    "webpack:watch": "webpack --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ksstott/react-playground.git"
+  },
+  "keywords": [
+    "react"
+  ],
+  "author": "Kelvin Stott",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ksstott/react-playground/issues"
+  },
+  "homepage": "https://github.com/ksstott/react-playground#readme",
+  "devDependencies": {
+    "awesome-typescript-loader": "^5.2.0",
+    "source-map-loader": "^0.2.4",
+    "typescript": "^3.0.1",
+    "webpack": "^4.17.1",
+    "webpack-cli": "^3.1.0"
+  },
+  "dependencies": {
+    "@types/react": "^16.4.11",
+    "@types/react-dom": "^16.0.7",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2"
+  }
+}
