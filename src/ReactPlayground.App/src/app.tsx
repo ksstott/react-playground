@@ -4,8 +4,9 @@ import { Fragment } from "redux-little-router";
 import { Hello } from "./components/Hello";
 import { About } from "./components/About";
 import { NavMenu } from "./components/NavMenu";
+import Courses from "./components/course/CoursesPage";
 
-export class App extends React.Component<{}> {
+export class App extends React.Component {
     public render() {
         return (
             <div>
@@ -17,6 +18,9 @@ export class App extends React.Component<{}> {
                         </Fragment>
                         <Fragment forRoute="/about">
                             <About />
+                        </Fragment>
+                        <Fragment forRoute="/courses">
+                            <Courses />
                         </Fragment>
                     </div>
                 </Fragment>

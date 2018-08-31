@@ -6,7 +6,10 @@ export class NavMenu extends React.Component {
         return (
             <div>
                 <Link href="/">Home</Link>
+                {" | "}
                 <Link href="/about">About</Link>
+                {" | "}
+                <Link href="/courses">Courses</Link>
             </div>
         );
     }

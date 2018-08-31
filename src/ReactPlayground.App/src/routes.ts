@@ -4,5 +4,8 @@ export const routes = {
     },
     '/about': {
       title: 'About'
+    },
+    '/courses': {
+      title: 'Courses'
     }
   };
