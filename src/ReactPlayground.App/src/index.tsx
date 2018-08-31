@@ -11,13 +11,18 @@ import { routes } from "./routes";
 import { App } from "./app";
 import courses from "./reducers/courseReducer";
 
+import thunk from 'redux-thunk';
+import { loadCourses } from "./actions/courseActions";
+
 const { reducer, middleware, enhancer } = routerForBrowser({ routes });
 
 const store = createStore(
     combineReducers({ router: reducer, courses }),
     {},
-    composeWithDevTools(enhancer, applyMiddleware(middleware, reduxImmutableStateInvariant()))
+    composeWithDevTools(enhancer, applyMiddleware(middleware, thunk, reduxImmutableStateInvariant()))
   );
+
+store.dispatch(loadCourses());
 
 ReactDOM.render(
     <Provider store={store}>

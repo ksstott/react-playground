@@ -4,37 +4,17 @@ import { Dispatch } from "redux";
 
 import * as courseActions from "../../actions/courseActions";
 
-export class CoursesPage extends React.Component<{ courses: any[], createCourse: (c: any) => void }, {}> {
-    state: any = { course: { title: null } };
-
-    constructor(props: { courses: any[], createCourse: (c: any) => void }) {
+export class CoursesPage extends React.Component<any> {
+    constructor(props: any) {
         super(props);
     }
-    
-    public onTitleChange(event: any): any {
-        const course = this.state.course;
-        course.title = event.target.value;
-        this.setState({course});
-    }
 
-    public onClickSave() {
-        this.props.createCourse(this.state.course)
-    }
 
     public render() {
         return (
             <div>
                 <h1>Courses</h1>
                 {this.props.courses.map(this.renderCourseRow)}
-                <h2>Add Course</h2>
-                <input 
-                    type="text"
-                    onChange={e => this.onTitleChange(e)}
-                    value={this.state.course.title} />
-                <input
-                    type="submit"
-                    value="Save"
-                    onClick={() => this.onClickSave()} />
             </div>
         );
     }
@@ -53,7 +33,6 @@ function mapStateToProps(state: any, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Dispatch) {
     return {
-        createCourse: (course: any) => dispatch(courseActions.createCourse(course))
     };
 }
 
