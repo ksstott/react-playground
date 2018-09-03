@@ -5,6 +5,7 @@ import { Hello } from "./components/Hello";
 import { About } from "./components/About";
 import { NavMenu } from "./components/NavMenu";
 import Courses from "./components/course/CoursesPage";
+import { Container } from 'semantic-ui-react'
 
 export class App extends React.Component {
     public render() {
@@ -12,7 +13,7 @@ export class App extends React.Component {
             <div>
                 <NavMenu />
                 <Fragment forRoute="/">
-                    <div>
+                    <Container>
                         <Fragment forRoute="/">
                             <Hello compiler="TypeScript" framework="React" />
                         </Fragment>
@@ -22,7 +23,7 @@ export class App extends React.Component {
                         <Fragment forRoute="/courses">
                             <Courses />
                         </Fragment>
-                    </div>
+                    </Container>
                 </Fragment>
             </div>
         );

@@ -40,6 +40,7 @@
     "redux-devtools-extension": "^2.13.5",
     "redux-immutable-state-invariant": "^2.1.0",
     "redux-little-router": "^15.1.1",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "semantic-ui-react": "^0.82.3"
   }
 }
