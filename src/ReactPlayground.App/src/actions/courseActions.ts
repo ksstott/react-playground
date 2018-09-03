@@ -6,7 +6,8 @@ export function loadCoursesSuccess(courses: any): any {
 }
 
 export function loadCourses() {
-    return function(dispatch: (p: any) => void) {
-        return CourseApi.getAllCourses().then(courses => dispatch(loadCoursesSuccess(courses)));
+    return async function(dispatch: (p: any) => void) {
+        let courses = await CourseApi.getAllCourses();
+        dispatch(loadCoursesSuccess(courses));
     }
 }
