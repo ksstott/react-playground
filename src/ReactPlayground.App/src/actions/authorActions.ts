@@ -1,9 +1,10 @@
 import * as actionTypes from './actionTypes';
 import { AuthorApi } from '../api/mockAuthorApi';
 import { loadAndTrack } from "redux-request-loading";
-import { Dispatch } from 'redux';
+import { Dispatch, AnyAction } from 'redux';
+import { Author } from '../api/author';
 
-export function loadAuthorsSuccess(authors: any): any {
+export function loadAuthorsSuccess(authors: Author[]): AnyAction {
     return { type: actionTypes.LOAD_AUTHORS_SUCCESS, authors };
 }
 

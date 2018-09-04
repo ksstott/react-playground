@@ -1,7 +1,17 @@
 import * as React from "react";
-import { Form, Button, InputOnChangeData } from 'semantic-ui-react';
+import { Form, Button, InputProps, DropdownItemProps } from 'semantic-ui-react';
+import { Course } from "../../api/course";
 
-export const CourseForm: React.SFC<any> = (props: any) => {
+export interface CourseFormProps {
+    onSave: () => void;
+    onChange: (event: React.SyntheticEvent<HTMLElement>, data: InputProps) => void
+    course: Course;
+    errors: any;
+    allAuthors: DropdownItemProps[];
+    saving: boolean;
+}
+
+export const CourseForm: React.SFC<any> = (props: CourseFormProps) => {
     return (
         <div>
             <h1>Manage Course</h1>

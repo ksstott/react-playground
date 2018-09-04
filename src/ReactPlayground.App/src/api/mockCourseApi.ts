@@ -1,9 +1,10 @@
 import { delay } from './delay';
+import { Course } from './course';
 
 // This file mocks a web API by working with the hard-coded data below.
 // It uses setTimeout to simulate the delay of an AJAX call.
 // All calls return promises.
-const courses = [
+const courses: Course[] = [
   {
     id: "react-flux-building-applications",
     title: "Building Applications in React and Flux",
@@ -51,22 +52,22 @@ function replaceAll(str: string, find: string, replace: string) {
 }
 
 //This would be performed on the server in a real app. Just stubbing in.
-const generateId = (course: any) => {
+const generateId = (course: Course) => {
   return replaceAll(course.title, ' ', '-');
 };
 
 export class CourseApi {
-  static getAllCourses(): Promise<any[]> {
-    return new Promise<any[]>((resolve, reject) => {
+  static getAllCourses(): Promise<Course[]> {
+    return new Promise<Course[]>((resolve, reject) => {
       setTimeout(() => {
         resolve(Object.assign([], courses));
       }, delay);
     });
   }
 
-  static saveCourse(course: any) {
+  static saveCourse(course: Course) {
     course = Object.assign({}, course); // to avoid manipulating object passed in.
-    return new Promise<any>((resolve, reject) => {
+    return new Promise<Course>((resolve, reject) => {
       setTimeout(() => {
         // Simulate server-side validation
         const minCourseTitleLength = 1;
@@ -91,10 +92,10 @@ export class CourseApi {
     });
   }
 
-  static deleteCourse(courseId: number) {
+  static deleteCourse(courseId: string) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        const indexOfCourseToDelete = courses.findIndex((course: any) => course.id == courseId);
+        const indexOfCourseToDelete = courses.findIndex((course: Course) => course.id == courseId);
         courses.splice(indexOfCourseToDelete, 1);
         resolve();
       }, delay);

@@ -1,14 +1,30 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { CourseForm } from './CourseForm';
-import { InputOnChangeData, Dimmer, Loader } from 'semantic-ui-react';
+import { InputOnChangeData, Dimmer, Loader, DropdownItemProps } from 'semantic-ui-react';
 import { saveCourse } from "../../actions/courseActions";
 import { ThunkDispatch } from "redux-thunk";
 import { push } from "redux-little-router";
 import { isRequestActive } from "redux-request-loading";
+import { Course } from "../../api/course";
+import { Author } from "../../api/author";
+import { ApplicationState } from "../../applicationState";
 
-class ManageCoursePage extends React.Component<{ course: any, authors: any[], saveCourse: (course: any) => void, loading: boolean, saving: boolean }, { course: any, errors: any }> {
-    constructor(props: { course: any, authors: any[], saveCourse: (course: any) => void, loading: boolean, saving:boolean }) {
+export interface ManageCourseProps {
+    course: Course;
+    saveCourse: (course: Course) => void;
+    loading: boolean;
+    saving: boolean;
+    authors: DropdownItemProps[];
+}
+
+export interface ManageCourseState {
+    course: Course & { [key: string]: any };
+    errors: any;
+}
+
+class ManageCoursePage extends React.Component<ManageCourseProps, ManageCourseState> {
+    constructor(props: ManageCourseProps) {
         super(props);
 
         this.state = {
@@ -20,18 +36,16 @@ class ManageCoursePage extends React.Component<{ course: any, authors: any[], sa
         this.saveCourse = this.saveCourse.bind(this);
     }
 
-    static getDerivedStateFromProps(props: any, state: any) {
+    static getDerivedStateFromProps(props: ManageCourseProps, state: ManageCourseState) {
         if (props.course.id !== state.course.id) {
-            return {
-                course: { ...props.course }
-            };
+            return { ... state, course: { ...props.course } };
         }
 
         return null;
     }
 
     updateCourseState(event: React.SyntheticEvent<HTMLInputElement>, data: InputOnChangeData) {
-        this.state.course[data.name] = data.value;
+        this.state.course[data['name'] as string] = data.value;
         return this.setState({ course: this.state.course });
     }
 
@@ -57,37 +71,31 @@ class ManageCoursePage extends React.Component<{ course: any, authors: any[], sa
     }
 }
 
-function getCourseById(courses: any[], courseId: string) {
-    return courses.find(c => c.id === courseId);
-}
-
-function mapStateToProps(state: any, ownProps: any) {
+function mapStateToProps(state: ApplicationState): ManageCourseProps {
     const courseId = state.router.params ? state.router.params.id : null;
-    let course;
+    let course: Course = { id: '', title: '', authorId: '', length: '', category: '', watchHref: '' };
     if (courseId && state.courses.length) {
-        course = getCourseById(state.courses, courseId);
-    }
-    else {
-        course = { id: '', title: '', authorId: '', length: '', category: '' };
+        course = state.courses.find((c: Course) => c.id === courseId) || course;
     }
 
     return {
         course: course,
-        authors: state.authors.map((a: any) => {
+        authors: state.authors.map((a: Author) => {
             return {
                 value: a.id,
                 text: `${a.firstName} ${a.lastName}`
             };
         }),
         loading: isRequestActive(state, "loadAuthors") || isRequestActive(state, "loadCourses"),
-        saving: isRequestActive(state, "saveCourse")
+        saving: isRequestActive(state, "saveCourse"),
+        saveCourse: () => null
     };
 }
 
-function mapDispatchToProps(dispatch: ThunkDispatch<any, any, any>) {
+function mapDispatchToProps(dispatch: ThunkDispatch<ApplicationState, any, any>) {
     return {
-        saveCourse: async (course: any) => {
-            await dispatch(saveCourse(course, null));
+        saveCourse: async (course: Course) => {
+            await dispatch(saveCourse(course));
             dispatch(push('/courses'));
         }
     };

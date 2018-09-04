@@ -1,8 +1,9 @@
 import * as React from "react";
 import { Link } from "redux-little-router";
 import { Table } from 'semantic-ui-react';
+import { Course } from "../../api/course";
 
-export const CourseListRow: React.SFC<{ course: any }> = (props: { course: any }) => {
+export const CourseListRow: React.SFC<{ course: Course }> = (props: { course: Course }) => {
     return (
             <Table.Row>
                 <Table.Cell><a href={props.course.watchHref} target="_target">Watch</a></Table.Cell>

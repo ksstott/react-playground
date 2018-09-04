@@ -7,9 +7,16 @@ import { CourseList } from "./CourseList";
 import { Button, Loader, Dimmer } from 'semantic-ui-react';
 import { isRequestActive } from "redux-request-loading";
 import { Link } from "redux-little-router";
+import { ApplicationState } from "../../applicationState";
+import { Course } from "../../api/course";
 
-export class CoursesPage extends React.Component<any, any> {
-    constructor(props: any) {
+export interface CoursesProps {
+    loading: boolean;
+    courses: Course[];
+}
+
+export class CoursesPage extends React.Component<CoursesProps> {
+    constructor(props: CoursesProps) {
         super(props);
     }
 
@@ -27,7 +34,7 @@ export class CoursesPage extends React.Component<any, any> {
     }
 }
 
-function mapStateToProps(state: any, ownProps: any) {
+function mapStateToProps(state: ApplicationState) {
     return {
         courses: state.courses || [],
         loading: isRequestActive(state, "loadCourses")
