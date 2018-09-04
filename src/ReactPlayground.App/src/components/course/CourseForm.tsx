@@ -32,7 +32,7 @@ export const CourseForm: React.SFC<any> = (props: any) => {
                     value={props.course.length}
                     onChange={(event, data) => props.onChange(event, data)}
                     error={props.errors.length} />
-                <Button type='submit' primary>Submit</Button>
+                <Button type='submit' primary loading={props.saving}>Submit</Button>
             </Form>
         </div>
     );

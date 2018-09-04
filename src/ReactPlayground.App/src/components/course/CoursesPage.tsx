@@ -4,9 +4,10 @@ import { Dispatch } from "redux";
 
 import { CourseList } from "./CourseList";
 
-import { Button } from 'semantic-ui-react';
+import { Button, Loader, Dimmer } from 'semantic-ui-react';
+import { isRequestActive } from "redux-request-loading";
 
-export class CoursesPage extends React.Component<any> {
+export class CoursesPage extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
     }
@@ -14,6 +15,9 @@ export class CoursesPage extends React.Component<any> {
     public render() {
         return (
             <div>
+                <Dimmer active={this.props.loading}>
+                    <Loader />
+                </Dimmer>
                 <h1>Courses</h1>
                 <Button href="/course" primary>Add Course</Button>
                 <CourseList courses={this.props.courses} />
@@ -24,7 +28,8 @@ export class CoursesPage extends React.Component<any> {
 
 function mapStateToProps(state: any, ownProps: any) {
     return {
-        courses: state.courses || []
+        courses: state.courses || [],
+        loading: isRequestActive(state, "loadCourses")
     };
 }
 

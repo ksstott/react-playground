@@ -1,13 +1,14 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { CourseForm } from './CourseForm';
-import { InputOnChangeData } from 'semantic-ui-react';
+import { InputOnChangeData, Dimmer, Loader } from 'semantic-ui-react';
 import { saveCourse } from "../../actions/courseActions";
 import { ThunkDispatch } from "redux-thunk";
 import { push } from "redux-little-router";
+import { isRequestActive } from "redux-request-loading";
 
-class ManageCoursePage extends React.Component<{ course: any, authors: any[], saveCourse: (course: any) => void }, { course: any, errors: any }> {
-    constructor (props: { course: any, authors: any[], saveCourse: (course: any) => void }) {
+class ManageCoursePage extends React.Component<{ course: any, authors: any[], saveCourse: (course: any) => void, loading: boolean, saving: boolean }, { course: any, errors: any }> {
+    constructor(props: { course: any, authors: any[], saveCourse: (course: any) => void, loading: boolean, saving:boolean }) {
         super(props);
 
         this.state = {
@@ -31,7 +32,7 @@ class ManageCoursePage extends React.Component<{ course: any, authors: any[], sa
 
     updateCourseState(event: React.SyntheticEvent<HTMLInputElement>, data: InputOnChangeData) {
         this.state.course[data.name] = data.value;
-        return this.setState({course: this.state.course});
+        return this.setState({ course: this.state.course });
     }
 
     saveCourse() {
@@ -40,12 +41,18 @@ class ManageCoursePage extends React.Component<{ course: any, authors: any[], sa
 
     render() {
         return (
-            <CourseForm
-                course={this.state.course}
-                errors={this.state.errors}
-                allAuthors={this.props.authors}
-                onChange={this.updateCourseState}
-                onSave={this.saveCourse} />
+            <div>
+                <Dimmer active={this.props.loading}>
+                    <Loader />
+                </Dimmer>
+                <CourseForm
+                    course={this.state.course}
+                    errors={this.state.errors}
+                    allAuthors={this.props.authors}
+                    onChange={this.updateCourseState}
+                    onSave={this.saveCourse}
+                    saving={this.props.saving} />
+            </div>
         );
     }
 }
@@ -55,7 +62,7 @@ function getCourseById(courses: any[], courseId: string) {
 }
 
 function mapStateToProps(state: any, ownProps: any) {
-    const courseId = state.router.params.id;
+    const courseId = state.router.params ? state.router.params.id : null;
     let course;
     if (courseId && state.courses.length) {
         course = getCourseById(state.courses, courseId);
@@ -71,14 +78,16 @@ function mapStateToProps(state: any, ownProps: any) {
                 value: a.id,
                 text: `${a.firstName} ${a.lastName}`
             };
-        })
+        }),
+        loading: isRequestActive(state, "loadAuthors") || isRequestActive(state, "loadCourses"),
+        saving: isRequestActive(state, "saveCourse")
     };
 }
 
 function mapDispatchToProps(dispatch: ThunkDispatch<any, any, any>) {
     return {
-        saveCourse: (course: any) => {
-            dispatch(saveCourse(course, null));
+        saveCourse: async (course: any) => {
+            await dispatch(saveCourse(course, null));
             dispatch(push('/courses'));
         }
     };

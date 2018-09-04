@@ -16,10 +16,12 @@ import thunk from 'redux-thunk';
 import { loadCourses } from "./actions/courseActions";
 import { loadAuthors } from "./actions/authorActions";
 
+import { reducer as loading } from "redux-request-loading";
+
 const { reducer, middleware, enhancer } = routerForBrowser({ routes });
 
 const store = createStore(
-    combineReducers({ router: reducer, courses, authors }),
+    combineReducers({ router: reducer, courses, authors, loading }),
     {},
     composeWithDevTools(enhancer, applyMiddleware(middleware, thunk, reduxImmutableStateInvariant()))
   );
