@@ -4,6 +4,8 @@ import { Dispatch } from "redux";
 
 import { CourseList } from "./CourseList";
 
+import { Button } from 'semantic-ui-react';
+
 export class CoursesPage extends React.Component<any> {
     constructor(props: any) {
         super(props);
@@ -11,7 +13,11 @@ export class CoursesPage extends React.Component<any> {
 
     public render() {
         return (
-            <CourseList courses={this.props.courses} />
+            <div>
+                <h1>Courses</h1>
+                <Button href="/course" primary>Add Course</Button>
+                <CourseList courses={this.props.courses} />
+            </div>
         );
     }
 }

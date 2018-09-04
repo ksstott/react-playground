@@ -7,5 +7,8 @@ export const routes = {
     },
     '/courses': {
       title: 'Courses'
+    },
+    '/course/:id': {
+      title: 'Manage Course'
     }
   };

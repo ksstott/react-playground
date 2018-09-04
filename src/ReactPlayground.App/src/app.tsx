@@ -6,6 +6,7 @@ import { About } from "./components/About";
 import { NavMenu } from "./components/NavMenu";
 import Courses from "./components/course/CoursesPage";
 import { Container } from 'semantic-ui-react'
+import { ManageCoursePageRedux } from "./components/course/ManageCoursePage";
 
 export class App extends React.Component {
     public render() {
@@ -22,6 +23,9 @@ export class App extends React.Component {
                         </Fragment>
                         <Fragment forRoute="/courses">
                             <Courses />
+                        </Fragment>
+                        <Fragment forRoute="/course">
+                            <ManageCoursePageRedux />
                         </Fragment>
                     </Container>
                 </Fragment>

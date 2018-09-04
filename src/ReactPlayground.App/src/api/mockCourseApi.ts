@@ -66,7 +66,7 @@ export class CourseApi {
 
   static saveCourse(course: any) {
     course = Object.assign({}, course); // to avoid manipulating object passed in.
-    return new Promise((resolve, reject) => {
+    return new Promise<any>((resolve, reject) => {
       setTimeout(() => {
         // Simulate server-side validation
         const minCourseTitleLength = 1;
