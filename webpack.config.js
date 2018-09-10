@@ -1,4 +1,5 @@
 module.exports = {
+    mode: 'development',
     entry: "./src/ReactPlayground.App/src/index.tsx",
     output: {
         filename: "bundle.js",
